@@ -1,0 +1,28 @@
+<!-- api/templates/emails/welcome_email.html -->
+<!DOCTYPE html>
+<html>
+<body style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333;">
+    <div style="max-width: 600px; margin: auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
+        <div style="text-align: center; padding-bottom: 20px;">
+            <h1 style="color: #00684a;">Gas Mtaani</h1>
+        </div>
+        <h2 style="color: #333;">Security Verification</h2>
+        <p>Hi <strong>{{ user_name }}</strong>,</p>
+        <p>Your security code for <strong>Gas Mtaani</strong> is below. Please use this to verify your account.</p>
+        
+        <div style="text-align: center; margin: 30px 0;">
+            <div style="background-color: #f4f4f4; border: 2px dashed #00684a; color: #00684a; padding: 15px; font-size: 32px; font-weight: bold; letter-spacing: 5px; border-radius: 5px; display: inline-block;">
+               {{ otp }}
+            </div>
+        </div>
+        
+        <p style="text-align: center; color: #666; font-size: 14px;">This code will expire in <strong>3 minutes</strong>.</p>
+        
+        <p>If you did not request this code, please ignore this email.</p>
+        <hr style="border: 0; border-top: 1px solid #eee; margin: 20px 0;">
+        <p style="font-size: 12px; color: #777; text-align: center;">
+            &copy; 2026 Gas Mtaani. Karatina, Kenya.
+        </p>
+    </div>
+</body>
+</html>
