@@ -12,7 +12,9 @@ django-mongodb-backend==6.0.2
 djangorestframework==3.16.1
 dnspython==2.8.0
 google-auth==2.49.1
+gunicorn==26.0.0
 idna==3.11
+packaging==26.2
 pillow==12.2.0
 pyasn1==0.6.3
 pyasn1_modules==0.4.2
