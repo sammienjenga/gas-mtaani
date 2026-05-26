@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 export const AuthContext = createContext();
 
@@ -16,7 +17,7 @@ export const AuthProvider = ({ children }) => {
 
   const sendOTP = async (email) => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/send-otp/", {
+      const res = await fetch(`${API_BASE_URL}/send-otp/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })
@@ -27,7 +28,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (userData) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/signup/", {
+      const response = await fetch(`${API_BASE_URL}/signup/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...userData, username: userData.email }),
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 
 const verifyOTP = async (email, otp) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/verify-email/", {
+      const response = await fetch(`${API_BASE_URL}/verify-email/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp: otp.toString().trim() }),
@@ -62,7 +63,7 @@ const verifyOTP = async (email, otp) => {
 
   const login = async (email, password) => {
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/login/", {
+      const response = await fetch(`${API_BASE_URL}/login/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, CheckCircle, Truck, Eye, Loader2, Package, Search } from "lucide-react";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 function AdminOrders() {
   const [orders, setOrders] = useState([]); 
@@ -10,7 +11,7 @@ function AdminOrders() {
   const token = sessionStorage.getItem("gas_token");
 
   // UPDATED: Using environment variable for the backend URL
-  const API_BASE = import.meta.env.VITE_API_URL;
+  const API_BASE = API_BASE_URL;
 
   const fetchOrders = async () => {
     try {

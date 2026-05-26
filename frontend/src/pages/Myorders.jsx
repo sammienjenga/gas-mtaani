@@ -3,6 +3,9 @@ import { AuthContext } from "../context/AuthContext.jsx";
 import { Package, ChevronRight, MapPin, Phone, Clock, Hash, CheckCircle2, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
+
+
 
 // --- SUB-COMPONENT: Kilimall Style Progress Tracker ---
 const DeliveryStepper = ({ status }) => {
@@ -58,7 +61,7 @@ function MyOrders() {
       return;
     }
     try {
-      const response = await fetch("http://localhost:8000/api/orders/", {
+      const response = await fetch(`${API_BASE_URL}/api/orders/`, {
         headers: { "Authorization": `Token ${token}` },
       });
       const data = await response.json();

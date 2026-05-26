@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
+import { API_BASE_URL } from "../api.jsx";
 import { Package, ShoppingCart, Users, Edit3, Trash2, Search, Loader2, Zap, ZapOff, Clock } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -16,7 +17,7 @@ function AdminDashboard() {
 
   const token = sessionStorage.getItem("gas_token");
   // UPDATED: Using environment variable for URLs
-  const BACKEND_URL = import.meta.env.VITE_API_URL;
+  const BACKEND_URL = API_BASE_URL;
 
   const timeOptions = Array.from({ length: 24 }, (_, i) => {
     const hour = i.toString().padStart(2, "0");

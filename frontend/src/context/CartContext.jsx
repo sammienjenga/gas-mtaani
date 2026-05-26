@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect, useContext, useRef, useCallback } from "react"; 
 import { AuthContext } from "../context/AuthContext.jsx";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 export const CartContext = createContext();
 
@@ -20,7 +21,7 @@ export const CartProvider = ({ children }) => {
     }
     
     try {
-      const response = await fetch("http://localhost:8000/api/cart/", {
+      const response = await fetch(`${API_BASE_URL}/cart/`, {
         headers: { "Authorization": `Token ${token}` }
       });
       if (response.ok) {
@@ -51,7 +52,7 @@ export const CartProvider = ({ children }) => {
       if (!token) return;
 
       try {
-        await fetch("http://localhost:8000/api/cart/", {
+        await fetch(`${API_BASE_URL}/cart/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

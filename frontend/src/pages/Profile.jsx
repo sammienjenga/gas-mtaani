@@ -2,6 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext.jsx";
 import { User, Mail, ShieldCheck, MapPin, Phone, Camera, Save, Loader2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 function Profile() {
   const { user } = useContext(AuthContext);
@@ -22,8 +23,8 @@ function Profile() {
     const fetchProfile = async () => {
       if (!token) return;
       try {
-        // UPDATED: Using import.meta.env.VITE_API_URL
-        const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/`, {
+        // UPDATED: Using API_BASE_URL
+        const response = await fetch(`${API_BASE_URL}/profile/`, {
           headers: { "Authorization": `Token ${token}` }
         });
         const data = await response.json();
@@ -52,8 +53,8 @@ function Profile() {
     setSaving(true);
     
     try {
-      // UPDATED: Using import.meta.env.VITE_API_URL
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/profile/`, {
+      // UPDATED: Using API_BASE_URL
+      const response = await fetch(`${API_BASE_URL}/profile/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

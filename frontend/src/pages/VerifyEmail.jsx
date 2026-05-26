@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext.jsx";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 function VerifyEmail() {
   const [otp, setOtp] = useState("");
@@ -87,8 +88,8 @@ function VerifyEmail() {
     if (!canResend) return;
     setLoading(true);
     try {
-      // UPDATED: Using import.meta.env.VITE_API_URL
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/send-otp/`, {
+      // UPDATED: Using API_BASE_URL
+      const res = await fetch(`${API_BASE_URL}/send-otp/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email })

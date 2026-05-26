@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, User, UserPlus, AlertCircle, Eye, EyeOff, Loader2, ShieldCheck } from "lucide-react";
 import { GoogleLogin } from '@react-oauth/google';
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 function Signup() {
   const { signup, login } = useContext(AuthContext); 
@@ -45,7 +46,7 @@ function Signup() {
 
   const handleGoogleSuccess = async (credentialResponse) => {
     
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/google-login/`, {
+    const res = await fetch(`${API_BASE_URL}/google-login/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token: credentialResponse.credential }),

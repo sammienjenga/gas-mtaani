@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import ProductCard from "../component/ProductCard.jsx";
 import { Clock, Flashlight, ShieldCheck, Truck, Zap } from "lucide-react";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
+
 
 function Home() {
   const [products, setProducts] = useState([]);
@@ -10,7 +12,7 @@ function Home() {
   const [globalTimeLeft, setGlobalTimeLeft] = useState({ hrs: "00", mins: "00", secs: "00" });
 
   // UPDATED: Using environment variable for the backend URL
-  const BACKEND_URL = import.meta.env.VITE_API_URL;
+  const BACKEND_URL = API_BASE_URL;
 
   // --- 1. HELPER LOGIC ---
   const isDealActive = useCallback((endTime) => {

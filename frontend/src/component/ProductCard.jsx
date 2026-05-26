@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext.jsx";
 import { CartContext } from "../context/CartContext.jsx";
 import { ShoppingCart, Loader2, ShieldCheck, Clock, Zap } from "lucide-react";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 function ProductCard({ product, onExpiry }) {
   const { user } = useContext(AuthContext); 
@@ -15,7 +16,7 @@ function ProductCard({ product, onExpiry }) {
   const [timeLeft, setTimeLeft] = useState({ hrs: "00", mins: "00", secs: "00" });
 
   // UPDATED: Using environment variable for URLs
-  const BACKEND_URL = import.meta.env.VITE_API_URL;
+  const BACKEND_URL = API_BASE_URL;
 
   // --- TIME VALIDATION LOGIC ---
   const isTimeValid = () => {

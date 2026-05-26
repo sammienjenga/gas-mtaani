@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Save, ChevronLeft, Camera, Upload } from "lucide-react";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
+
 
 function ProductManagement() {
   const navigate = useNavigate();
@@ -32,8 +34,8 @@ function ProductManagement() {
     if (id) {
       const fetchProduct = async () => {
         try {
-          // UPDATED: Using import.meta.env.VITE_API_URL
-          const response = await fetch(`${import.meta.env.VITE_API_URL}/products/${id}/`);
+          // UPDATED: Using API_BASE_URL
+          const response = await fetch(`${API_BASE_URL}/products/${id}/`);
           const data = await response.json();
           setFormData({
             name: data.name,
@@ -80,10 +82,10 @@ function ProductManagement() {
     Object.keys(formData).forEach(key => uploadData.append(key, formData[key]));
     if (selectedFile) uploadData.append("image", selectedFile); 
 
-    // UPDATED: Using import.meta.env.VITE_API_URL
+    // UPDATED: Using API_BASE_URL
     const url = id 
-      ? `${import.meta.env.VITE_API_URL}/products/${id}/` 
-      : `${import.meta.env.VITE_API_URL}/products/`;
+      ? `${API_BASE_URL}/products/${id}/` 
+      : `${API_BASE_URL}/products/`;
     const method = id ? "PATCH" : "POST";
 
     const performUpdate = async () => {

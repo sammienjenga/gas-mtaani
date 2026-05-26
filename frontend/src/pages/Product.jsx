@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useLocation, Link } from "react-router-dom";
 import ProductCard from "../component/ProductCard.jsx";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
+
 
 function Product() {
   const location = useLocation();
@@ -12,7 +14,7 @@ function Product() {
   // 1. Fetch all products from Django - UPDATED with .env
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/products/`);
+      const response = await fetch(`${API_BASE_URL}/products/`);
       if (!response.ok) throw new Error("Failed to connect to server");
       
       const data = await response.json();

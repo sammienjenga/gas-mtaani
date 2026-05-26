@@ -4,6 +4,7 @@ import { AuthContext } from "../context/AuthContext.jsx";
 import { Trash2, Loader2, ShoppingBag, ArrowLeft } from "lucide-react";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
 
 function Checkout() {
   const { cartItems = [], removeFromCart, updateQuantity, cartTotal = 0, clearCart } = useContext(CartContext) || {};
@@ -12,7 +13,7 @@ function Checkout() {
   const navigate = useNavigate();
 
   // UPDATED: Using environment variable for the backend URL
-  const DJANGO_BASE_URL = import.meta.env.VITE_API_URL; 
+const DJANGO_BASE_URL = API_BASE_URL; 
 
   const handleOrder = async () => {
     if (!cartItems || cartItems.length === 0) {

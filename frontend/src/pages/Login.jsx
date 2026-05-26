@@ -4,6 +4,8 @@ import { useNavigate, Link, useLocation } from "react-router-dom";
 import { Mail, Lock, LogIn, AlertCircle, Eye, EyeOff, Loader2, ArrowLeft } from "lucide-react";
 import { GoogleLogin } from '@react-oauth/google'; 
 import toast from "react-hot-toast";
+import { API_BASE_URL } from "../api.jsx";
+
 
 function Login() {
   const { login, sendOTP } = useContext(AuthContext); 
@@ -73,7 +75,7 @@ function Login() {
     setLoading(true);
     try {
       // UPDATED: Using import.meta.env.VITE_API_URL
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/verify-otp-reset/`, {
+      const res = await fetch(`${API_BASE_URL}/verify-otp-reset/`,  {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, otp, new_password: newPassword })
@@ -153,7 +155,7 @@ function Login() {
                   setLoading(true);
                   try {
                     // UPDATED: Using import.meta.env.VITE_API_URL
-                    const res = await fetch(`${import.meta.env.VITE_API_URL}/google-login/`, {
+                    const res = await fetch(`${API_BASE_URL}/google-login/`, {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({ token: credentialResponse.credential })
