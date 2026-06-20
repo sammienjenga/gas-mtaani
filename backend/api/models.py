@@ -1,7 +1,7 @@
 import uuid
 from django.db import models
 from django.utils import timezone
-from datetime import time
+from datetime import timedelta, timezone
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 
 # --- 1. CUSTOM USER MANAGER ---
@@ -60,46 +60,57 @@ class Product(models.Model):
     category = models.CharField(max_length=100, default="General")
     brand = models.CharField(max_length=100, blank=True, null=True) 
     weight = models.CharField(max_length=50, blank=True, null=True)
-    
-    # Using DecimalField for better price accuracy
     price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)      
     stock = models.IntegerField(default=0)      
     image = models.ImageField(upload_to='products/', null=True, blank=True)
     description = models.TextField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # NEW: 24-Hour Deal Fields
+    # 24-Hour Deal Fields (deal_date handled automatically by serializer)
     is_deal = models.BooleanField(default=False)
     deal_price = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
-    deal_start_time = models.TimeField(null=True, blank=True) # Format: HH:MM:SS
-    deal_end_time = models.TimeField(null=True, blank=True)   # Format: HH:MM:SS
+    deal_date = models.DateField(null=True, blank=True)  
+    deal_start_time = models.TimeField(null=True, blank=True) 
+    deal_end_time = models.TimeField(null=True, blank=True)   
 
     @property
     def is_deal_active(self):
         """
-        Calculates if the deal is currently live based on the system clock.
-        Supports deals that stay within one day and overnight deals.
+        Calculates if the deal is live automatically. Supports both same-day 
+        deals and overnight deals, expiring completely once the time window shuts.
         """
-        if not self.is_deal or not self.deal_start_time or not self.deal_end_time:
+        if not self.is_deal or not self.deal_date or not self.deal_start_time or not self.deal_end_time:
             return False
         
-        # Get current time in your local timezone (Karatina/Nairobi)
-        current_time = timezone.localtime().time()
-        
+        # 🇰🇪 Get current local date and time in Nairobi
+        local_now = timezone.localtime()
+        current_date = local_now.date()
+        current_time = local_now.time()
+
         start = self.deal_start_time
         end = self.deal_end_time
 
+        # CASE 1: Standard Same-Day Deal (e.g., 08:00 to 20:00)
         if start <= end:
-            # Normal range (e.g., 08:00 to 20:00)
+            if current_date != self.deal_date:
+                return False
             return start <= current_time <= end
+
+        # CASE 2: Overnight Deal spanning across midnight (e.g., 22:00 to 04:00)
         else:
-            # Overnight range (e.g., 22:00 to 04:00)
-            return current_time >= start or current_time <= end
+            # Day 1: It's the activation day and we are past the start time
+            if current_date == self.deal_date and current_time >= start:
+                return True
+            # Day 2: It's the morning after activation day and we are before the end time
+            tomorrow_cutoff = self.deal_date + timedelta(days=1)
+            if current_date == tomorrow_cutoff and current_time <= end:
+                return True
+            
+            return False
 
     def __str__(self):
         status = " ACTIVE DEAL" if self.is_deal_active else "REGULAR"
         return f"[{status}] {self.name} - KES {self.price}"
-
 
 # --- 4. CART MODEL ---
 class CartItem(models.Model):

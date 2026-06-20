@@ -23,7 +23,7 @@ function AdminDashboard() {
     const hour = i.toString().padStart(2, "0");
     return `${hour}:00`;
   });
-
+  
   const fetchDashboardData = async () => {
     try {
       const headers = { "Authorization": `Token ${token}` };
@@ -79,7 +79,7 @@ function AdminDashboard() {
           toast.success("DEAL DEACTIVATED", { icon: null });
       } else if (payload.is_deal === true) {
           toast.success("DEAL SCHEDULED", { icon: null });
-          setDealInputs(prev => ({...prev, [id]: { price: "", startTime: "", endTime: "" }}));
+          setDealInputs(prev => ({...prev, [id]: { price: "", dealDate: "", startTime: "", endTime: "" }}));
       } else {
           toast.success("PRODUCT UPDATED", { icon: null });
       }
