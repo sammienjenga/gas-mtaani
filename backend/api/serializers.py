@@ -2,6 +2,7 @@ from rest_framework import serializers, validators
 from .models import Product, CartItem, Order, User
 import json
 
+
 class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         required=True,
@@ -69,12 +70,18 @@ class ProductSerializer(serializers.ModelSerializer):
             'image', 
             'description',
             'is_deal', 
+            'deal_date', 
             'deal_price',        # Added for the new deal logic
             'deal_start_time',   # Added for 24h range
             'deal_end_time',     # Added for 24h range
             'is_deal_active',
             'created_at'
         ]
+    def validate(self, data):
+        if data.get('is_deal') is True:
+            data['deal_date'] = timezone.localtime().date()
+        return data
+  
 
 class CartItemSerializer(serializers.ModelSerializer):
     id = serializers.CharField(read_only=True)

@@ -12,7 +12,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY') 
 DEBUG = True
-ALLOWED_HOSTS = ['localhost','127.0.0.1','gas-mtaani.onrender.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','gas-mtaani.onrender.com','vercel.app']
 
 INSTALLED_APPS = [ 
     'corsheaders',
@@ -49,8 +49,9 @@ SOCIALACCOUNT_PROVIDERS = {
 # --- EMAIL BACKEND ---
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
+EMAIL_PORT = 465
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
 EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
 
@@ -112,7 +113,14 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://gas-mtaani.vercel.app",
+]
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^http://localhost:\d+$",
+    r"^http://127\.0\.0\.1:\d+$",
+]
 
 # --- CUSTOM USER MODEL ---
 AUTH_USER_MODEL = 'api.User'
